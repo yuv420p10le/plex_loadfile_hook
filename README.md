@@ -41,9 +41,6 @@ gpu-api=vulkan
 
 # Replace with your display's bit depth. Will be 8 for most SDR displays, and 10/12 for most HDR/DV supporting ones.
 dither-depth=10
-
-# Uncomment and replace 400 with your display's brightness, in nits.
-# target-peak=400
 ```
 
 Refer to the mpv manual (linked in resources) for additional settings.
