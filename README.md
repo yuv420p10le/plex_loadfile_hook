@@ -13,7 +13,7 @@ This release makes use of DLL proxying to inject `plex_loadfile_hook` when Plex 
 
 Windows only. Binaries provided for x86_64, but it should work for 32-bit as well.
 
-1. Download `d3d11.dll` from [the latest release](https://github.com/yuv420p10le/plex_loadfile_hook/releases/latest) and put it in your Plex installation folder. (e.g. `C:\Program Files\Plex\Plex`)
+1. Download `d3d11.dll` from [the latest release](https://github.com/yuv420p10le/plex_loadfile_hook/releases/latest/download/d3d11.dll) and put it in your Plex installation folder. (e.g. `C:\Program Files\Plex\Plex`)
 2. Grab the latest `libmpv` build from [shinchiro's provided builds](https://sourceforge.net/projects/mpv-player-windows/files/libmpv/), rename `libmpv-2.dll` to `mpv-2.dll`, and replace `mpv-2.dll` in the Plex installation folder with it.
 
 ## Use new settings
