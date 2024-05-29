@@ -10,6 +10,7 @@
 
 decltype(&mpv_command_node) _mpv_command_node;
 decltype(&mpv_command_string) _mpv_command_string;
+decltype(&mpv_set_property_string) _mpv_set_property_string;
 
 uintptr_t get_func_address(std::string_view lib, std::string_view func)
 {
@@ -90,7 +91,15 @@ int hook_mpv_command_node(mpv_handle* ctx, mpv_node* args, mpv_node* result)
 				// Path/query
 				new_url += match.str(4);
 				url = new_url;
+
+				// We won't have a valid certificate for https://ip:32400/ or whatever. _mpv_set_property_string(ctx, "tls-verify", "yes");
+				_mpv_set_property_string(ctx, "tls-verify", "no");
 			}
+		}
+
+		else
+		{
+			_mpv_set_property_string(ctx, "tls-verify", "yes");
 		}
 
 		return _mpv_command_string(ctx, std::format("loadfile {} replace", url).c_str());
@@ -103,6 +112,7 @@ void hook()
 {
 	_mpv_command_node = reinterpret_cast<decltype(&mpv_command_node)>(get_func_address("mpv-2.dll", "mpv_command_node"));
 	_mpv_command_string = reinterpret_cast<decltype(&mpv_command_string)>(get_func_address("mpv-2.dll", "mpv_command_string"));
+	_mpv_set_property_string = reinterpret_cast<decltype(&mpv_set_property_string)>(get_func_address("mpv-2.dll", "mpv_set_property_string"));
 
 #if _DEBUG
 	AllocConsole();
