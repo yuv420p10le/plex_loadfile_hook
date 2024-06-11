@@ -1,0 +1,1 @@
+GitLab is god awful and makes life hard when it comes to attaching binaries to a release. I'm just putting them here.
