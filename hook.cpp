@@ -92,7 +92,7 @@ int hook_mpv_command_node(mpv_handle* ctx, mpv_node* args, mpv_node* result)
 				new_url += match.str(4);
 				url = new_url;
 
-				// We won't have a valid certificate for https://ip:32400/ or whatever. _mpv_set_property_string(ctx, "tls-verify", "yes");
+				// We won't have a valid certificate for https://ip:32400/ or whatever.
 				_mpv_set_property_string(ctx, "tls-verify", "no");
 			}
 		}
