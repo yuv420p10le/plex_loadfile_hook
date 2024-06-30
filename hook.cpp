@@ -10,7 +10,6 @@
 #endif
 
 decltype(&mpv_command_node) _mpv_command_node;
-decltype(&mpv_command_string) _mpv_command_string;
 decltype(&mpv_set_property_string) _mpv_set_property_string;
 
 uintptr_t get_func_address(std::string_view lib, std::string_view func)
@@ -103,7 +102,17 @@ int hook_mpv_command_node(mpv_handle* ctx, mpv_node* args, mpv_node* result)
 			_mpv_set_property_string(ctx, "tls-verify", "yes");
 		}
 
-		return _mpv_command_string(ctx, std::format("loadfile {} replace", url).c_str());
+		mpv_node new_args[]
+		{
+			{ .u = { .string = const_cast<char*>("loadfile")}, .format = MPV_FORMAT_STRING, },
+			{ .u = { .string = const_cast<char*>(url.c_str()) }, .format = MPV_FORMAT_STRING, },
+			{ .u = { .string = const_cast<char*>("replace")}, .format = MPV_FORMAT_STRING, }
+		};
+
+		mpv_node_list node_list = { sizeof(new_args) / sizeof(new_args[0]), new_args };
+		mpv_node val_list = { .u = { .list = &node_list }, .format = MPV_FORMAT_NODE_ARRAY, };
+
+		return _mpv_command_node(ctx, &val_list, result);
 	}
 
 	return _mpv_command_node(ctx, args, result);
@@ -120,7 +129,6 @@ void hook()
 	}
 
 	_mpv_command_node = reinterpret_cast<decltype(&mpv_command_node)>(get_func_address("mpv-2.dll", "mpv_command_node"));
-	_mpv_command_string = reinterpret_cast<decltype(&mpv_command_string)>(get_func_address("mpv-2.dll", "mpv_command_string"));
 	_mpv_set_property_string = reinterpret_cast<decltype(&mpv_set_property_string)>(get_func_address("mpv-2.dll", "mpv_set_property_string"));
 
 #if _DEBUG
