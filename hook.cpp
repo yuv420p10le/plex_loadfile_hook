@@ -3,6 +3,7 @@
 #include <MinHook.h>
 #include <format>
 #include <regex>
+#include <Psapi.h>
 
 #if _DEBUG
 #include <print>
@@ -110,6 +111,14 @@ int hook_mpv_command_node(mpv_handle* ctx, mpv_node* args, mpv_node* result)
 
 void hook()
 {
+	char filename[MAX_PATH];
+	GetModuleBaseNameA(GetCurrentProcess(), NULL, filename, sizeof(filename));
+
+	if(std::string_view name(filename); name != "Plex.exe" && name != "Plex HTPC.exe")
+	{
+		return;
+	}
+
 	_mpv_command_node = reinterpret_cast<decltype(&mpv_command_node)>(get_func_address("mpv-2.dll", "mpv_command_node"));
 	_mpv_command_string = reinterpret_cast<decltype(&mpv_command_string)>(get_func_address("mpv-2.dll", "mpv_command_string"));
 	_mpv_set_property_string = reinterpret_cast<decltype(&mpv_set_property_string)>(get_func_address("mpv-2.dll", "mpv_set_property_string"));

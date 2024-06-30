@@ -7,7 +7,7 @@ Why is this an issue? Plex uses an incredibly old version of libmpv which lacks 
 ## How this works
 
 A detour is placed on `mpv-2.dll.mpv_command_node` to catch the playback URL. It is parsed and then passed to mpv with the correct arguments. This mod also fixes playback for `*.plex.direct` URLs when using upstream mpv.
-This release makes use of DLL proxying to inject `plex_loadfile_hook` when Plex and the Qt web engine load Direct3D 11.
+This release makes use of DLL proxying to inject `plex_loadfile_hook` when Plex loads Direct3D 11.
 
 ## Installation
 
