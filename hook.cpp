@@ -43,7 +43,7 @@ void print_node_list(mpv_node_list* list)
 
 		else
 		{
-			std::println("{}: {} -> {}", i, list->keys[i], static_cast<int>(list->values[i].format));
+			std::println("{}: {} -> {}", i, (list->keys != nullptr && list->keys[i] != nullptr) ? list->keys[i] : "(null)", static_cast<int>(list->values[i].format));
 		}
 	}
 }
@@ -57,7 +57,7 @@ int hook_mpv_command_node(mpv_handle* ctx, mpv_node* args, mpv_node* result)
 #if _DEBUG
 	std::println("mpv_command_node({:08X}, {}, {});", reinterpret_cast<uintptr_t>(ctx), static_cast<int>(args->format), reinterpret_cast<uintptr_t>(result));
 
-	if(args->format == MPV_FORMAT_NODE_ARRAY)
+	if(args->format == MPV_FORMAT_NODE_ARRAY && list != nullptr)
 	{
 		print_node_list(list);
 	}
