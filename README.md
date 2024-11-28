@@ -33,7 +33,9 @@ profile=high-quality
 hwdec=auto-safe
 
 # Allows for HDR passthrough & automatically setting the display to HDR mode, when using the Vulkan API.
-target-colorspace-hint=yes
+# Could be set to `no` if on an SDR display.
+# On mpv version 0.40, there's a default `auto` value which will display HDR content directly if the display supports it. Or it will use mpv's tonemapping for it otherwise.
+# target-colorspace-hint=yes
 
 # Replace with gpu-api=d3d11 if you're having issues.
 # vulkan will allow automatic switching to HDR when playing DV content, and will display DV tonemapped to HDR.
