@@ -64,7 +64,7 @@ int hook_mpv_command_node(mpv_handle* ctx, mpv_node* args, mpv_node* result)
 	}
 #endif
 
-	if(args->format == MPV_FORMAT_NODE_ARRAY && list->num == 4 && list->values[0].format == MPV_FORMAT_STRING && std::string_view(list->values[0].u.string) == "loadfile")
+	if(args->format == MPV_FORMAT_NODE_ARRAY && list->num == 5 && list->values[0].format == MPV_FORMAT_STRING && std::string_view(list->values[0].u.string) == "loadfile")
 	{
 		auto url = std::string(list->values[1].u.string);
 
@@ -121,9 +121,9 @@ void hook()
 		return;
 	}
 
-	_mpv_command_node = reinterpret_cast<decltype(&mpv_command_node)>(get_func_address("mpv-2.dll", "mpv_command_node"));
-	_mpv_command_ret = reinterpret_cast<decltype(&mpv_command_ret)>(get_func_address("mpv-2.dll", "mpv_command_ret"));
-	_mpv_set_property_string = reinterpret_cast<decltype(&mpv_set_property_string)>(get_func_address("mpv-2.dll", "mpv_set_property_string"));
+	_mpv_command_node = reinterpret_cast<decltype(&mpv_command_node)>(get_func_address("libmpv-2.dll", "mpv_command_node"));
+	_mpv_command_ret = reinterpret_cast<decltype(&mpv_command_ret)>(get_func_address("libmpv-2.dll", "mpv_command_ret"));
+	_mpv_set_property_string = reinterpret_cast<decltype(&mpv_set_property_string)>(get_func_address("libmpv-2.dll", "mpv_set_property_string"));
 
 #if _DEBUG
 	AllocConsole();
